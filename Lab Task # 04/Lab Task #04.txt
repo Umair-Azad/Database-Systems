@@ -1,0 +1,221 @@
+                                   
+                                    NAME : UMAIR AZAD
+                                    ROLL NO : 19P-0030
+                                    SECTION : 4B
+                                    LAB TASK # 06
+                                     
+Exercises:
+
+
+    E4.1:
+        Write a query that displays the average hourly rate that has been paid to all employees.
+Your query should return €7.03.
+
+MariaDB [umair]> SELECT ROUND(AVG(HOUR_RATE),2) FROM HOURS;
++-------------------------+
+| ROUND(AVG(HOUR_RATE),2) |
++-------------------------+
+|                    7.03 |
++-------------------------+
+1 row in set (0.297 sec)
+
+
+
+   
+ 
+     E4.2: 
+          Write a query that displays the average attraction age for all attractions where the
+PARK_CODE is equal to ‘UK3452’. Your query should return 7.25 years.
+
+MariaDB [umair]> SELECT PARK_CODE,AVG(ATTRACT_AGE) FROM ATTRACTION GROUP BY 
+PARK_CODE HAVING AVG(ATTRACT_AGE)=7.25;
++-----------+------------------+
+| PARK_CODE | AVG(ATTRACT_AGE) |
++-----------+------------------+
+| UK3452    |           7.2500 |
++-----------+------------------+
+
+
+
+
+
+    E4.3:
+        Display the employee numbers of all employees and the total number of hours they
+have worked.
+
+MariaDB [umair]> SELECT EMP_NUM,SUM(HOURS_PER_ATTRACT) FROM HOURS GROUP BY EMP_NUM;
++---------+------------------------+
+| EMP_NUM | SUM(HOURS_PER_ATTRACT) |
++---------+------------------------+
+|     100 |                     12 |
+|     101 |                      6 |
+|     102 |                     12 |
+|     104 |                     12 |
+|     105 |                     12 |
++---------+------------------------+
+
+
+
+
+
+    E4.4: 
+         Show the attraction number and the minimum and maximum hourly rate for each attraction.
+
+  MariaDB [umair]> SELECT ATTRACT_NO,MIN(HOUR_RATE),MAX(HOUR_RATE) FROM HOURS GROUP BY ATTRACT_NO;
++------------+----------------+----------------+
+| ATTRACT_NO | MIN(HOUR_RATE) | MAX(HOUR_RATE) |
++------------+----------------+----------------+
+|      10034 |           6.50 |           6.50 |
+|      10078 |           8.50 |           8.50 |
+|      10098 |           8.50 |           8.50 |
+|      30011 |           7.20 |           7.20 |
+|      30012 |           5.99 |           7.20 |
+|      30044 |           5.99 |           5.99 |
++------------+----------------+----------------+
+6 rows in set (0.089 sec)
+
+
+
+
+ 
+       E4.5:
+            Using the HOURS table, write a query to display the employee number (EMP_NUM), 
+the attraction number(ATTRACT-NO) and the average hours worked per attraction(HOURS_PER_ATTRACT) 
+limiting the result to where the average hours worked per attraction
+is greater or equal to 5.
+
+ MariaDB [umair]> SELECT EMP_NUM,ATTRACT_NO,AVG(HOURS_PER_ATTRACT) FROM HOURS GROUP BY 
+EMP_NUM,ATTRACT_NO HAVING AVG(HOURS_PER_ATTRACT)>5;
++---------+------------+------------------------+
+| EMP_NUM | ATTRACT_NO | AVG(HOURS_PER_ATTRACT) |
++---------+------------+------------------------+
+|     100 |      10034 |                 6.0000 |
+|     101 |      10034 |                 6.0000 |
+|     104 |      30011 |                 6.0000 |
+|     104 |      30012 |                 6.0000 |
++---------+------------+------------------------+
+4 rows in set (0.023 sec)
+
+
+
+
+
+      E4.6: 
+          Write a CROSS JOIN query which selects all rows from the EMPLOYEE and HOURS tables. 
+    How many rows were returned?
+
+   QUERY:MariaDB [umair]> SELECT * FROM EMPLOYEE CROSS JOIN HOURS;
+   ------+------------+-------------------+-----------+-------------+
+  77 rows in set (0.211 sec)
+
+
+
+
+
+       E4.7:
+            Write a query that displays the employees first and last name (EMP_FNAME
+and EMP_LNAME), the attraction number(ATTRACT_NO) and the date worked.
+
+   MariaDB [umair]> SELECT EMP_FNAME,EMP_LNAME,ATTRACT_NO,DATE_WORKED FROM EMPLOYEE NATURAL JOIN HOURS;
++-----------+------------+------------+-------------+
+| EMP_FNAME | EMP_LNAME  | ATTRACT_NO | DATE_WORKED |
++-----------+------------+------------+-------------+
+| Emma      | Calderdale |      10034 | 2007-05-18  |
+| Emma      | Calderdale |      10034 | 2007-05-20  |
+| Marshel   | Ricardo    |      10034 | 2007-05-18  |
+| Arif      | Arshad     |      30012 | 2007-05-23  |
+| Arif      | Arshad     |      30044 | 2007-05-21  |
+| Arif      | Arshad     |      30044 | 2007-05-22  |
+| Enrica    | Denver     |      30011 | 2007-05-21  |
+| Enrica    | Denver     |      30012 | 2007-05-22  |
+| Mirrelle  | Namowa     |      10078 | 2007-05-18  |
+| Mirrelle  | Namowa     |      10098 | 2007-05-18  |
+| Mirrelle  | Namowa     |      10098 | 2007-05-19  |
++-----------+------------+------------+-------------+
+11 rows in set (0.138 sec)
+
+
+
+
+     
+       E4.8:
+           Rewrite the query you wrote in E 4.7 so that the attraction name
+(ATTRACT_NAME located in the ATTRACTION table) is also displayed.
+ 
+  MariaDB [umair]> SELECT EMP_FNAME,EMP_LNAME,ATTRACT_NO,ATTRACT_NAME FROM EMPLOYEE NATURAL JOIN HOURS NATURAL JOIN ATTRACTION;
++-----------+------------+------------+----------------+
+| EMP_FNAME | EMP_LNAME  | ATTRACT_NO | ATTRACT_NAME   |
++-----------+------------+------------+----------------+
+| Emma      | Calderdale |      10034 | ThunderCoaster |
+| Emma      | Calderdale |      10034 | ThunderCoaster |
+| Mirrelle  | Namowa     |      10078 | Ant-Trap       |
+| Mirrelle  | Namowa     |      10098 | Carnival       |
+| Mirrelle  | Namowa     |      10098 | Carnival       |
++-----------+------------+------------+----------------+
+5 rows in set (0.041 sec)
+
+
+
+
+
+
+       E4.9:
+            Display the park names and total sales for Theme Parks who are located in the
+country ‘UK’ or ‘FR’.
+
+
+  MariaDB [umair]> SELECT PARK_NAME,SUM(LINE_PRICE)TOTAL_SALES FROM THEMEPARK NATURAL JOIN SALES NATURAL JOIN SALES_LINE WHERE PARK_COUNTRY='FR' OR PARK_COUNTRY='Uk';
++-----------+-------------+
+| PARK_NAME | TOTAL_SALES |
++-----------+-------------+
+| FairyLand |     1252.86 |
++-----------+-------------+
+1 row in set (0.001 sec)
+ 
+
+
+
+
+      E4.10:
+           List the sale date, line quantity and line price of all transactions on the 18th May
+2007.
+
+ MariaDB [umair]> SELECT SALE_DATE,LINE_QTY,LINE_PRICE FROM SALES NATURAL JOIN SALES_LINE WHERE
+ SALE_DATE ="2007-05-18" ;
++------------+----------+------------+
+| SALE_DATE  | LINE_QTY | LINE_PRICE |
++------------+----------+------------+
+| 2007-05-18 |        2 |      69.98 |
+| 2007-05-18 |        1 |      14.99 |
+| 2007-05-18 |        2 |      69.98 |
+| 2007-05-18 |        2 |      41.98 |
+| 2007-05-18 |        1 |      14.99 |
+| 2007-05-18 |        1 |      14.99 |
+| 2007-05-18 |        1 |      34.99 |
+| 2007-05-18 |        4 |     139.96 |
+| 2007-05-18 |        4 |     168.40 |
+| 2007-05-18 |        1 |      22.50 |
+| 2007-05-18 |        2 |      21.98 |
+| 2007-05-18 |        2 |      84.20 |
+| 2007-05-18 |        2 |      21.98 |
+| 2007-05-18 |        2 |      84.20 |
+| 2007-05-18 |        1 |      22.50 |
+| 2007-05-18 |        2 |      21.98 |
+| 2007-05-18 |        2 |      21.98 |
+| 2007-05-18 |        2 |      84.20 |
+| 2007-05-18 |        4 |     168.40 |
+| 2007-05-18 |        1 |      22.50 |
+| 2007-05-18 |        2 |      21.98 |
+| 2007-05-18 |        2 |      84.20 |
+| 2007-05-18 |        2 |      57.34 |
+| 2007-05-18 |        2 |      37.12 |
+| 2007-05-18 |        2 |      57.34 |
+| 2007-05-18 |        2 |      37.12 |
+| 2007-05-18 |        1 |      18.56 |
+| 2007-05-18 |        1 |      12.12 |
+| 2007-05-18 |        4 |     114.68 |
+| 2007-05-18 |        2 |      57.34 |
+| 2007-05-18 |        2 |      37.12 |
++------------+----------+------------+
+31 rows in set (0.001 sec)
+
