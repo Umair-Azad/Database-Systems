@@ -1,0 +1,61 @@
+                                    NAME : UMAIR AZAD
+                                    ROLL NO : 19P-0030
+                                    SECTION : 4B
+                                    LAB TASK # 01
+                                     
+Exercises:
+
+
+  Task:1 Create the database named your rollno_name (i.e p21432_usman)
+ 
+ MariaDB [(none)]> CREATE DATABASE P190030_UMAIRAZAD;
+Query OK, 1 row affected (0.002 sec)
+
+
+
+  Task:2 Execute the following MySQL command to show the databases that you
+just created.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| company            |
+| faiq_org           |
+| fast123            |
+| fb                 |
+| food_order         |
+| guest_house        |
+| information_schema |
+| mysql              |
+| organization       |
+| p190030_umair      |
+| p190030_umairazad  |
+| performance_schema |
+| phpmyadmin         |
+| sales_co           |
+| test               |
+| umair              |
++--------------------+
+16 rows in set (0.001 sec)
+
+
+
+
+    Task:3 Execute the following MySQL command to begin using the p218743_usman
+database.
+ 
+ MariaDB [(none)]> USE P190030_UMAIRAZAD;
+Database changed
+MariaDB [P190030_UMAIRAZAD]>
+
+
+  Task:4 Execute the following MySQL command to create the table structures for the above
+created database.
+
+  MariaDB [P190030_UMAIRAZAD]> CREATE TABLE STUDENT(
+    -> ROLL_NO VARCHAR(50) PRIMARY KEY,
+    -> NAME VARCHAR(50),
+    -> DOB DATE
+    -> );
+Query OK, 0 rows affected (1.289 sec)
