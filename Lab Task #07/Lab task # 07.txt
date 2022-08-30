@@ -1,0 +1,108 @@
+
+
+               First create database
+create database person;
+use person
+create table users(
+    user_id int(8) not null primary key,
+    username varchar(15) not null,
+    password varchar(5) not null,
+    email varchar(30) not null,
+    salary int(8) not null
+);
+
+  Insert the data 
+insert into users value(1,'abc123','def321','abc123@yahoo.com',3000);
+insert into users value(2,'xyz789','asd123','xyz789@@yahoo.com',3000);
+
+create table summary(
+    id tinyint(1) not null primary key,
+    total_users tinyint(2) not null,
+    yahoo tinyint (1) not null,
+    hotmail tinyint(1) not null,
+    gmail tinyint(1) not null
+);
+
+insert into summary values(1,2,1,0,1);
+
+
+1. Write a procedure that take id, total_user, Yahoo, Hotmail, Gmail values as an
+input and insert the data into the table summary.
+ 
+ DELIMITER $$
+ CREATE PROCEDURE T1()
+ BEGIN
+ INSERT INTO SUMMARY VALUES (2,4,2,0,5);
+ END$$
+
+CALL T1$$
+SELECT * FROM SUMMARY$$
+
+
+
+    2. Write a procedure that take user_id, username, password, email values as an input
+and insert the data into the table Users.
+
+CREATE PROCEDURE T2()
+BEGIN
+INSERT INTO USERS VALUES(4, 'BILAL','HELLOWORLD','IBI@GMAIL.COM',5000);
+END$$
+
+CALL T2$$
+SELECT * FROM USERS$$
+
+
+
+      3. Write a procedure that output the total number of records/rows in the users table.
+
+SELECT MIN(SALARY) FROM USERS;
+$$
+
+
+
+
+      4. Write a procedure that output the average salary in the users table.
+SELECT AVG(SALARY) FROM USERS;
+$$
+
+
+
+
+
+       5. Create a procedure named minmax which displays the lowest and the highest salary of
+the users. Run the procedure to display the lowest and the highest salary.
+
+CREATE PROCEDURE MINMAX()
+BEGIN
+SELECT MIN(SALARY) FROM USERS;
+SELECT MAX(salary) FROM USERS;
+END$$
+CALL MINMAX$$
+
+
+
+
+    6. Create trigger(s) to update the records in the summary table. The summary table
+will contain only one record and will be updated each time a new entry is made to
+the users table, or a user is deleted from the users table. You need to create the
+following two triggers.
+
+Delimiter $$
+create trigger task7a after insert
+on person.users
+for each row begin
+insert into person.summary (TOTAL_USER) values (NEW.user_id);
+end$$
+
+insert into users (username,password,email) values ('umair','abc123','umair@gmail.com')$$
+select * from users$$
+select * from summary$$
+
+
+insert into users (username,password,email) values ('fast','fast123','fast@gmail.com')$$
+select * from users$$
+select * from summary$$
+
+
+
+
