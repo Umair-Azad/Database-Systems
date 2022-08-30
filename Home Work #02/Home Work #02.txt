@@ -1,0 +1,95 @@
+   
+   1. Display the employee who got the maximum salary.
+
+   MariaDB [company]> SELECT * FROM EMP WHERE SALARY = (SELECT MAX(SALARY) FROM EMP);
++-------+-------+-----------+------+------------+--------+------------+--------+
+| empno | ename | job       | mgr  | hiredate   | salary | commission | deptno |
++-------+-------+-----------+------+------------+--------+------------+--------+
+|  7839 | King  | President | NULL | 2021-07-31 |   6500 |       NULL |     10 |
++-------+-------+-----------+------+------------+--------+------------+--------+
+1 row in set (0.107 sec) 
+
+
+   
+   2. Display the employees who are working in Sales department. 
+     
+  MariaDB [company]> SELECT * FROM EMP E,DEPT D WHERE E.DEPTNO = D.DEPTNO AND D.DNAME ='SALES';
++-------+--------+----------+------+------------+--------+------------+--------+--------+-------+----------+
+| empno | ename  | job      | mgr  | hiredate   | salary | commission | deptno | deptno | dname | location |
++-------+--------+----------+------+------------+--------+------------+--------+--------+-------+----------+
+|  7499 | Allen  | Salesman | 7566 | 2021-07-31 |   2000 |        500 |     30 |     30 | Sales | Chicago  |
+|  7521 | Ward   | Salesman | 7698 | 2021-07-31 |   1650 |        800 |     30 |     30 | Sales | Chicago  |
+|  7654 | Martin | Salesman | 7698 | 2021-07-31 |   1650 |       1400 |     30 |     30 | Sales | Chicago  |
+|  7698 | Blake  | Manager  | 7839 | 2021-07-31 |   3250 |       NULL |     30 |     30 | Sales | Chicago  |
+|  7844 | Turner | Salesman | 7698 | 2021-07-31 |   1900 |          0 |     30 |     30 | Sales | Chicago  |
+|  7900 | James  | Clerk    | 7698 | 2021-07-31 |   1350 |       NULL |     30 |     30 | Sales | Chicago  |
++-------+--------+----------+------+------------+--------+------------+--------+--------+-------+----------+
+6 rows in set (0.001 sec)
+
+
+
+   
+   3. Display the employees who are working in “New York”.
+ 
+   MariaDB [company]> SELECT * FROM EMP WHERE DEPTNO = (SELECT DEPTNO FROM DEPT WHERE LOCATION = 'NEW YORK');
++-------+--------+-----------+------+------------+--------+------------+--------+
+| empno | ename  | job       | mgr  | hiredate   | salary | commission | deptno |
++-------+--------+-----------+------+------------+--------+------------+--------+
+|  7782 | Clark  | Manager   | 7839 | 2021-07-31 |   2850 |       NULL |     10 |
+|  7839 | King   | President | NULL | 2021-07-31 |   6500 |       NULL |     10 |
+|  7934 | Miller | Clerk     | 7782 | 2021-07-31 |   1700 |       NULL |     10 |
++-------+--------+-----------+------+------------+--------+------------+--------+
+3 rows in set (0.203 sec)
+
+
+
+   
+    4. Find out no. of employees working in “Sales” department.
+
+      MariaDB [company]> SELECT COUNT(*) FROM EMP NATURAL JOIN DEPT WHERE DNAME =(SELECT DNAME FROM DEPT WHERE DNAME ='SALES' );
++----------+
+| COUNT(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.040 sec)
+
+
+
+
+    5. List out the employees who earn more than every employee in department 30.
+
+    MariaDB [company]> SELECT * FROM EMP WHERE SALARY > ALL(SELECT SALARY FROM EMP WHERE DEPTNO = '30');
++-------+-------+-----------+------+------------+--------+------------+--------+
+| empno | ename | job       | mgr  | hiredate   | salary | commission | deptno |
++-------+-------+-----------+------+------------+--------+------------+--------+
+|  7566 | Jones | Manager   | 7839 | 2021-07-31 |   3375 |       NULL |     20 |
+|  7788 | Scott | Analyst   | 7566 | 2021-07-31 |   3500 |       NULL |     20 |
+|  7839 | King  | President | NULL | 2021-07-31 |   6500 |       NULL |     10 |
+|  7902 | Ford  | Analyst   | 7566 | 2021-07-31 |   3500 |       NULL |     20 |
++-------+-------+-----------+------+------------+--------+------------+--------+
+4 rows in set (0.038 sec)
+
+
+
+      6. List out the employees who earn more than the lowest salary in department 30.
+     
+       MariaDB [company]> SELECT * FROM EMP WHERE SALARY > ANY(SELECT SALARY FROM EMP WHERE DEPTNO = '30');
++-------+--------+-----------+------+------------+--------+------------+--------+
+| empno | ename  | job       | mgr  | hiredate   | salary | commission | deptno |
++-------+--------+-----------+------+------------+--------+------------+--------+
+|  7499 | Allen  | Salesman  | 7566 | 2021-07-31 |   2000 |        500 |     30 |
+|  7521 | Ward   | Salesman  | 7698 | 2021-07-31 |   1650 |        800 |     30 |
+|  7566 | Jones  | Manager   | 7839 | 2021-07-31 |   3375 |       NULL |     20 |
+|  7654 | Martin | Salesman  | 7698 | 2021-07-31 |   1650 |       1400 |     30 |
+|  7698 | Blake  | Manager   | 7839 | 2021-07-31 |   3250 |       NULL |     30 |
+|  7782 | Clark  | Manager   | 7839 | 2021-07-31 |   2850 |       NULL |     10 |
+|  7788 | Scott  | Analyst   | 7566 | 2021-07-31 |   3500 |       NULL |     20 |
+|  7813 | David  | Clerk     | 7788 | 2021-07-31 |   1500 |       NULL |     20 |
+|  7839 | King   | President | NULL | 2021-07-31 |   6500 |       NULL |     10 |
+|  7844 | Turner | Salesman  | 7698 | 2021-07-31 |   1900 |          0 |     30 |
+|  7876 | Adams  | Clerk     | 7788 | 2021-07-31 |   1500 |       NULL |     20 |
+|  7902 | Ford   | Analyst   | 7566 | 2021-07-31 |   3500 |       NULL |     20 |
+|  7934 | Miller | Clerk     | 7782 | 2021-07-31 |   1700 |       NULL |     10 |
++-------+--------+-----------+------+------------+--------+------------+--------+
+13 rows in set (0.001 sec)
